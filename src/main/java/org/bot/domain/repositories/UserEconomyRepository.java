@@ -110,7 +110,7 @@ public class UserEconomyRepository {
             stmt.setString(2, discordId);
             stmt.executeUpdate();
 
-            String sqlExecuted = props.updateUserWalletWork().replaceFirst("\\?", String.valueOf(wallet));
+            String sqlExecuted = props.updateUserWallet().replaceFirst("\\?", String.valueOf(wallet));
             sqlExecuted = sqlExecuted.replaceFirst("\\?", discordId);
 
             System.out.println(sqlExecuted);

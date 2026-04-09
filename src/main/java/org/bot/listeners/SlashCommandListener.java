@@ -59,11 +59,31 @@ public class SlashCommandListener extends ListenerAdapter {
                     String depositText = walletCommand.depositCommand(newBankMoney, user);
                     event.reply(depositText).queue();
                 } else {
-                    event.reply("El monto es insuficiente, pedazo de pobre").queue();
+                    event.reply("El monto es insuficiente, pedazo de pobre " +
+                            "\nMonto proporcionado: " + amount).queue();
                 }
             }
             case "withdrawal" -> {
-
+                int amount = event.getOption("monto").getAsInt();
+                String discordId = event.getUser().getId();
+                int currentBankMoney = userEconomyRepository.getUserBankQuery(discordId);
+                if (amount <= 0) {
+                    event.reply("La cantidad solicitada a retirar es insuficiente").queue();
+                } else if (amount < currentBankMoney) {
+                    String user = event.getUser().getAsMention();
+                    WalletCommand walletCommand = new WalletCommand();
+                    int currentWalletMoney = userEconomyRepository.getUserWalletQuery(discordId);
+                    int newBankMoney = currentBankMoney - amount;
+                    int newWalletMoney = currentWalletMoney + amount;
+                    userEconomyRepository.updateUserBankQuery(newBankMoney, discordId);
+                    userEconomyRepository.updateUserWalletQuery(newWalletMoney, discordId);
+                    String depositText = walletCommand.getWithdrawCommand(newBankMoney, newWalletMoney, user);
+                    event.reply(depositText).queue();
+                } else {
+                    event.reply("El monto supera la miserable cantidad de tu cuenta" +
+                            "\nMonto proporcionado: " + amount +
+                            "\nCuanta de banco: " + currentBankMoney).queue();
+                }
             }
             default -> {
                 event.reply("El comando ingresado no existe").queue();
