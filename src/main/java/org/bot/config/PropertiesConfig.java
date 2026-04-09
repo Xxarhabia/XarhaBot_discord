@@ -52,7 +52,7 @@ public class PropertiesConfig {
         return props.getProperty("sql.create.user_economy");
     }
 
-    public String getUpdateUserWalletWork() {
+    public String updateUserWalletWork() {
         Properties props = readProperties();
         return props.getProperty("sql.update.user_wallet_work");
     }
@@ -60,6 +60,31 @@ public class PropertiesConfig {
     public String getUserWallet() {
         Properties props = readProperties();
         return props.getProperty("sql.get.user_wallet");
+    }
+
+    public String getUserBank() {
+        Properties props = readProperties();
+        return props.getProperty("sql.get.user_bank");
+    }
+
+    public String getUserBalance() {
+        Properties props = readProperties();
+        return props.getProperty("sql.get.user_balance");
+    }
+
+    public String updateUserBank() {
+        Properties props = readProperties();
+        return props.getProperty("sql.update.user_bank");
+    }
+
+    public String updateUserWallet() {
+        Properties props = readProperties();
+        return props.getProperty("sql.update.user_wallet");
+    }
+
+    public String updateDepositWithdrawal() {
+        Properties props = readProperties();
+        return props.getProperty("sql.update.deposit_withdrawal");
     }
 
 
