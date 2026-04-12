@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
-import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import org.bot.config.PropertiesConfig;
 import org.bot.listeners.SlashCommandListener;
 
@@ -37,6 +37,16 @@ public class Main {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
+        OptionData actionOption = new OptionData(OptionType.STRING, "action", "Accion a realizar");
+
+        actionOption.addChoice("kiss", "kiss");
+        actionOption.addChoice("slap", "slap");
+        actionOption.addChoice("sucking_dick ", "sucking_dick");
+        actionOption.addChoice("sex", "sex");
+
+        actionOption.setRequired(true);
+
         jda.getGuildById("796152295757709312")
             .updateCommands()
             .addCommands(
@@ -45,7 +55,10 @@ public class Main {
                 Commands.slash("deposit", "Se encarga de depositar en el banco un monto dado")
                         .addOption(OptionType.INTEGER, "monto", "Monto a usar", true),
                 Commands.slash("withdrawal", "Se engarga de retirar un monto del banco a la billetera")
-                        .addOption(OptionType.INTEGER, "monto", "Monto a usar", true)
+                        .addOption(OptionType.INTEGER, "monto", "Monto a usar", true),
+                Commands.slash("nsfw_action", "Acciones NSFW entre usuarios")
+                        .addOptions(actionOption)
+                        .addOption(OptionType.USER, "user", "Usuario objetivo", true)
             ).queue();
 
     }

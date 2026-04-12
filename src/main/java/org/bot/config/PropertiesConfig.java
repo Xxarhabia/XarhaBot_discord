@@ -45,6 +45,19 @@ public class PropertiesConfig {
     }
 
     /*
+    lectura configuracion Danbooru
+     */
+    public String getDanbooruUser() {
+        Properties props = readProperties();
+        return props.getProperty("danbooru.user");
+    }
+
+    public String getDanbooruApiKey() {
+        Properties props = readProperties();
+        return props.getProperty("danbooru.apikey");
+    }
+
+    /*
     Lectura de sql
      */
     public String getSqlCreateUserEconomy() {
